@@ -10,6 +10,16 @@ local is_not_nil = _.complement(_.equals(vim.NIL))
 ---@alias JobSpawn table<string, async fun(opts: SpawnArgs): Result>
 ---@type JobSpawn
 local spawn = {
+    _aliases = {
+        npm = platform.is.win and "npm.cmd" or "npm",
+        pnpm = platform.is.win and "pnpm.cmd" or "pnpm",
+        gem = platform.is.win and "gem.cmd" or "gem",
+        composer = platform.is.win and "composer.bat" or "composer",
+        gradlew = platform.is.win and "gradlew.bat" or "gradlew",
+        -- for hererocks installations
+        luarocks = (platform.is.win and vim.fn.executable "luarocks.bat" == 1) and "luarocks.bat" or "luarocks",
+        rebar3 = platform.is.win and "rebar3.cmd" or "rebar3",
+    },
     _flatten_cmd_args = _.compose(_.filter(is_not_nil), _.flatten),
 }
 
